@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infosys Workforce Intelligence | Project - 06: Workforce Capacity & Skill Gap Problem</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Obsidian Glassmorphic Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="top-header">
+        <div class="brand-wrapper">
+            <span class="brand-badge">INFOSYS</span>
+            <div class="brand-text">
+                <h1>Workforce Intelligence & Skill Capacity Optimization</h1>
+                <p>Project - 06: Workforce Capacity & Skill Gap Problem • Autonomous Business Operations</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="status-pill">
+                <span class="pulse-dot"></span>
+                <span>AI Workforce Engine Online</span>
+            </div>
+            <a href="/api/download_report" class="btn-download-pdf">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>Download Executive PDF Report</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="main-container">
+
+        <!-- Problem Statement Banner -->
+        <div class="problem-banner">
+            <div class="banner-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="banner-content">
+                <h3>Executive Problem Statement</h3>
+                <p>
+                    <b>"A infosys company has sufficient employees on paper but continues to miss project deadlines because the required skills are not available at the right time. Develop an AI workforce intelligence system that maps employee skills against business requirements, identifies critical skill gaps, and recommends hiring, training and internal allocation strategies."</b>
+                </p>
+            </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Total Workforce</span>
+                    <i class="fa-solid fa-users kpi-icon"></i>
+                </div>
+                <div class="kpi-value" id="kpi-workforce">14,000</div>
+                <div class="kpi-subtext">Active Bench: <b id="kpi-bench-headcount">2,227 (15.9%)</b></div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Legacy Bench Surplus</span>
+                    <i class="fa-solid fa-layer-group kpi-icon" style="color:#f59e0b;"></i>
+                </div>
+                <div class="kpi-value" id="kpi-legacy-share" style="color:#f59e0b;">48.2%</div>
+                <div class="kpi-subtext" id="kpi-legacy-desc">In COBOL / Manual QA / Java 7</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">Project Deadline Breach</span>
+                    <i class="fa-solid fa-clock-rotate-left kpi-icon" style="color:#ef4444;"></i>
+                </div>
+                <div class="kpi-value" id="kpi-breach-rate" style="color:#ef4444;">32.3%</div>
+                <div class="kpi-subtext" id="kpi-breach-desc">71 of 220 projects delayed</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">SLA Delay Penalties</span>
+                    <i class="fa-solid fa-sack-dollar kpi-icon" style="color:#ec4899;"></i>
+                </div>
+                <div class="kpi-value" id="kpi-penalties" style="color:#ec4899;">₹61.72 Cr</div>
+                <div class="kpi-subtext" id="kpi-contract-value">Total contract value at risk</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-title">ML Predictor ROC-AUC</span>
+                    <i class="fa-solid fa-brain-circuit kpi-icon" style="color:#10b981;"></i>
+                </div>
+                <div class="kpi-value" id="ml-roc-auc" style="color:#10b981;">0.9840</div>
+                <div class="kpi-subtext">Accuracy: <b id="ml-accuracy">96.4%</b> | F1: <b id="ml-f1">0.942</b></div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="tab-overview">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Executive Overview & The Paradox</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-skills">
+                <i class="fa-solid fa-table-cells"></i>
+                <span>Supply vs Demand Skill Gap Matrix</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-recommendations">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Tri-Pillar Strategic Recommender</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-matcher">
+                <i class="fa-solid fa-user-check"></i>
+                <span>Talent Matcher & Allocation Console</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-simulator">
+                <i class="fa-solid fa-sliders"></i>
+                <span>What-If Capacity Simulator</span>
+            </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 1: EXECUTIVE OVERVIEW & THE PARADOX -->
+        <!-- ========================================================================= -->
+        <div class="tab-content active" id="tab-overview">
+            <div class="panel-grid-2">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title">
+                                <i class="fa-solid fa-scale-unbalanced text-highlight"></i>
+                                <span>The Paper Capacity Paradox: Bench vs Real Demand</span>
+                            </div>
+                            <div class="panel-subtitle">Gross Bench ('On Paper') vs Unfulfilled Client Demand by Cluster</div>
+                        </div>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="paradoxChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title">
+                                <i class="fa-solid fa-chart-column text-highlight"></i>
+                                <span>Delivery Unit Breach Exposure & Incurred Penalties</span>
+                            </div>
+                            <div class="panel-subtitle">Contractual Milestone Breaches and Financial Penalties across DUs</div>
+                        </div>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="duExposureChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Architectural Explanation -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fa-solid fa-microscope text-highlight"></i>
+                        <span>Root-Cause Anatomy: Why "Sufficient Employees on Paper" Miss Deadlines</span>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; font-size: 13px; color: #cbd5e1;">
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h4 style="color:#00d2ff; margin-bottom: 6px;"><i class="fa-solid fa-arrows-split-up-and-left"></i> 1. Structural Skill Mismatch</h4>
+                        <p>Infosys maintains over 1,000+ bench engineers in legacy mainframe, manual testing, and Java 7/8 maintenance pools. Incoming digital transformation client deals demand GenAI, Databricks, and Cloud-Native Microservices where usable bench is under 3%.</p>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h4 style="color:#f59e0b; margin-bottom: 6px;"><i class="fa-solid fa-hourglass-half"></i> 2. Temporal Availability Latency</h4>
+                        <p>Senior certified practitioners in modern stacks are locked into long-term billing engagements with 60-120 day rolling releases, while incoming Fortune 500 contracts enforce strict 14 to 28-day staffing SLAs before contractual penalty clauses kick in.</p>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.5); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <h4 style="color:#10b981; margin-bottom: 6px;"><i class="fa-solid fa-certificate"></i> 3. Unverified Proficiency Gaps</h4>
+                        <p>Resumes list keyword skills without validated hands-on proficiency (Level 1 Novice vs Level 4 Lead Architect). Junior engineers placed without bridging support fail client technical screenings, deferring project kickoff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 2: SUPPLY VS DEMAND SKILL GAP MATRIX -->
+        <!-- ========================================================================= -->
+        <div class="tab-content" id="tab-skills">
+            <div class="panel-grid-2">
+                <div class="panel-card" style="grid-column: 1 / -1;">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title">
+                                <i class="fa-solid fa-fire text-highlight" style="color:#ef4444;"></i>
+                                <span>Top Critical Bottleneck Skills Causing Delivery Delays</span>
+                            </div>
+                            <div class="panel-subtitle">Ranked by Skill Criticality Index (Net Deficit × Scarcity × Revenue Exposure)</div>
+                        </div>
+                    </div>
+                    <div style="height: 260px;">
+                        <canvas id="criticalSkillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">
+                            <i class="fa-solid fa-table-list text-highlight"></i>
+                            <span>Enterprise Competency & Capacity Balance Matrix (25 Skills)</span>
+                        </div>
+                        <div class="panel-subtitle">Dynamic Supply vs Forward Demand Analysis across Technology Clusters</div>
+                    </div>
+                    <div class="filter-bar" style="margin-bottom: 0;">
+                        <select class="select-custom" id="skill-cluster-filter">
+                            <option value="ALL">All Technology Clusters (7)</option>
+                            <option value="Generative AI & ML">Generative AI & ML</option>
+                            <option value="Cloud Native & DevOps">Cloud Native & DevOps</option>
+                            <option value="Modern Data & Analytics">Modern Data & Analytics</option>
+                            <option value="Modern Full-Stack & UI">Modern Full-Stack & UI</option>
+                            <option value="Enterprise ERP & SaaS">Enterprise ERP & SaaS</option>
+                            <option value="Cyber Defense & SecOps">Cyber Defense & SecOps</option>
+                            <option value="Legacy Systems & Support">Legacy Systems & Support</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Skill Competency</th>
+                                <th>Cluster</th>
+                                <th>Scarcity</th>
+                                <th>Bench (>=L3)</th>
+                                <th>Rolling (30d)</th>
+                                <th>Open Demand</th>
+                                <th>Net Deficit</th>
+                                <th>Criticality</th>
+                                <th>Bridge Runway</th>
+                            </tr>
+                        </thead>
+                        <tbody id="skills-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: TRI-PILLAR STRATEGIC RECOMMENDER -->
+        <!-- ========================================================================= -->
+        <div class="tab-content" id="tab-recommendations">
+            <!-- Strategic Portfolio ROI Banner -->
+            <div class="panel-grid-2">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-chart-pie text-highlight"></i>
+                            <span>Tri-Pillar Fulfillment Channel Distribution</span>
+                        </div>
+                    </div>
+                    <div style="height: 260px;">
+                        <canvas id="channelPieChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-wallet text-highlight" style="color:#10b981;"></i>
+                            <span>Macro Strategic Portfolio Economics & ROI</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 14px; border-radius: 8px;">
+                            <div style="font-size: 11.5px; color:#94a3b8; text-transform: uppercase;">SLA Penalties Saved</div>
+                            <div style="font-size: 22px; font-weight: 800; color:#10b981;" id="roi-penalties-saved">₹48.50 Cr</div>
+                            <div style="font-size: 11px; color:#cbd5e1;">Averted contractual penalties</div>
+                        </div>
+
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 14px; border-radius: 8px;">
+                            <div style="font-size: 11.5px; color:#94a3b8; text-transform: uppercase;">Implementation Cost</div>
+                            <div style="font-size: 22px; font-weight: 800; color:#ef4444;" id="roi-implementation-cost">₹1.85 Cr</div>
+                            <div style="font-size: 11px; color:#cbd5e1;">Upskilling & Contractor fees</div>
+                        </div>
+
+                        <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 14px; border-radius: 8px;">
+                            <div style="font-size: 11.5px; color:#94a3b8; text-transform: uppercase;">Net Financial Gain</div>
+                            <div style="font-size: 22px; font-weight: 800; color:#38bdf8;" id="roi-net-gain">₹46.65 Cr</div>
+                            <div style="font-size: 11px; color:#cbd5e1;">Net bottom-line profit retained</div>
+                        </div>
+
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); padding: 14px; border-radius: 8px;">
+                            <div style="font-size: 11.5px; color:#94a3b8; text-transform: uppercase;">Portfolio ROI</div>
+                            <div style="font-size: 22px; font-weight: 800; color:#a78bfa;" id="roi-pct">+2,520%</div>
+                            <div style="font-size: 11px; color:#cbd5e1;">Breach Drop: <b id="roi-breach-drop">-65%</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Table -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">
+                            <i class="fa-solid fa-list-check text-highlight"></i>
+                            <span>Prescriptive Project Interventions & Execution Plans</span>
+                        </div>
+                        <div class="panel-subtitle">Targeted Allocation, Lex Bridging, and Contractor Staffing Decisions</div>
+                    </div>
+                    <div class="filter-bar" style="margin-bottom: 0;">
+                        <button class="btn-action-small rec-filter-btn active" data-action="ALL">All Actions</button>
+                        <button class="btn-action-small rec-filter-btn" data-action="ALLOCATE">Allocate</button>
+                        <button class="btn-action-small rec-filter-btn" data-action="UPSKILL">Upskill</button>
+                        <button class="btn-action-small rec-filter-btn" data-action="HIRE">Hire</button>
+                        <button class="btn-action-small rec-filter-btn" data-action="HYBRID">Hybrid</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Project & Client</th>
+                                <th>Required Competency</th>
+                                <th>Strategy</th>
+                                <th>Action Summary</th>
+                                <th>Lead Time</th>
+                                <th>Cost</th>
+                                <th>Penalty Saved</th>
+                                <th>Net ROI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recs-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 4: TALENT MATCHER & ALLOCATION CONSOLE -->
+        <!-- ========================================================================= -->
+        <div class="tab-content" id="tab-matcher">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">
+                            <i class="fa-solid fa-magnifying-glass-chart text-highlight"></i>
+                            <span>Intelligent Multi-Criteria Talent Matcher</span>
+                        </div>
+                        <div class="panel-subtitle">Select an unfulfilled project demand to scan and rank bench & rolling-release talent</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 12.5px; font-weight: 600; color:#e2e8f0; display:block; margin-bottom: 8px;">Select Open Client Project Demand:</label>
+                    <select class="select-custom" id="matcher-project-select" style="width: 100%; max-width: 800px; padding: 10px;">
+                        <!-- Populated by JavaScript -->
+                    </select>
+                </div>
+
+                <!-- Selected Project Spec Card -->
+                <div style="background: rgba(11, 37, 69, 0.4); border: 1px solid var(--border-glass); border-radius: 8px; padding: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                    <div>
+                        <h3 id="matcher-prj-name" style="font-size: 16px; color:#ffffff; margin-bottom: 4px;">Select a project above</h3>
+                        <p id="matcher-prj-meta" style="font-size: 12px; color:#94a3b8;">Client and delivery unit metadata will appear here</p>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="text-align: right;">
+                            <div style="font-size: 11px; color:#94a3b8;">Required Skill: <b id="matcher-prj-skill" style="color:#00d2ff;">—</b></div>
+                            <div style="font-size: 11px; color:#94a3b8;"><span id="matcher-prj-sla">—</span> | <span id="matcher-prj-gap" style="color:#f59e0b;">—</span></div>
+                        </div>
+                        <span id="matcher-prj-risk" class="badge badge-critical">—</span>
+                    </div>
+                </div>
+
+                <!-- Matched Candidates Grid -->
+                <h4 style="font-size: 13.5px; font-weight: 700; color: #e2e8f0; margin-bottom: 12px;">Top Ranked Candidate Matches from Bench & Rolling Pool:</h4>
+                <div class="candidate-grid" id="matcher-candidates-container">
+                    <!-- Populated dynamically by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 5: WHAT-IF CAPACITY SIMULATOR -->
+        <!-- ========================================================================= -->
+        <div class="tab-content" id="tab-simulator">
+            <div class="panel-grid-2">
+                <!-- Simulation Controls Card -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title">
+                                <i class="fa-solid fa-sliders text-highlight"></i>
+                                <span>Policy Lever Adjustments</span>
+                            </div>
+                            <div class="panel-subtitle">Simulate real-time operational capacity levers on delivery outcomes</div>
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>1. Accelerated Lex Upskilling Velocity (% Faster)</span>
+                            <span class="slider-val" id="val-sim-velocity">25%</span>
+                        </div>
+                        <input type="range" id="sim-velocity" min="0" max="50" step="5" value="25">
+                        <small style="color:#64748b; font-size:11px;">Reduces bridge turnaround time by shortening module completion duration.</small>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>2. Contractor Contingent Surge Headcount</span>
+                            <span class="slider-val" id="val-sim-surge">20 Specialists</span>
+                        </div>
+                        <input type="range" id="sim-surge" min="0" max="60" step="5" value="20">
+                        <small style="color:#64748b; font-size:11px;">Direct external specialist injection for acute deadline breaches (&lt;21 days).</small>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>3. Cross-Skilling Bench Mobilization</span>
+                            <span class="slider-val" id="val-sim-cross">20%</span>
+                        </div>
+                        <input type="range" id="sim-cross" min="0" max="40" step="5" value="20">
+                        <small style="color:#64748b; font-size:11px;">Deploying adjacent bench talent with senior architect shadow mentoring.</small>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>4. Client SLA Negotiation Buffer (Grace Days)</span>
+                            <span class="slider-val" id="val-sim-buffer">+7 Days</span>
+                        </div>
+                        <input type="range" id="sim-buffer" min="0" max="21" step="3" value="7">
+                        <small style="color:#64748b; font-size:11px;">Negotiated client grace window before delay penalties start accruing.</small>
+                    </div>
+                </div>
+
+                <!-- Simulation Output Chart -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <div class="panel-title">
+                                <i class="fa-solid fa-chart-line text-highlight" style="color:#10b981;"></i>
+                                <span>Simulated Enterprise Trajectory (Baseline vs Post-AI)</span>
+                            </div>
+                            <div class="panel-subtitle">Real-time comparison of breaches, penalties, and bench utilization</div>
+                        </div>
+                    </div>
+                    <div style="height: 280px;">
+                        <canvas id="simCompareChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulated Enterprise KPI Results -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fa-solid fa-bolt text-highlight"></i>
+                        <span>Simulated Counterfactual Business Outcomes</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border-left: 3px solid #10b981;">
+                        <div style="font-size: 11px; color:#94a3b8; text-transform: uppercase;">Breaches Averted</div>
+                        <div style="font-size: 20px; font-weight: 800; color:#10b981;" id="sim-res-averted">35 Projects (-49%)</div>
+                        <div style="font-size: 11px; color:#cbd5e1;">Remaining: <span id="sim-res-breaches">36 (16.4%)</span></div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border-left: 3px solid #00d2ff;">
+                        <div style="font-size: 11px; color:#94a3b8; text-transform: uppercase;">Penalties Saved</div>
+                        <div style="font-size: 20px; font-weight: 800; color:#00d2ff;" id="sim-res-saved-penalties">₹44.50 Cr</div>
+                        <div style="font-size: 11px; color:#cbd5e1;">Residual: <span id="sim-res-penalties">₹17.22 Cr</span></div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border-left: 3px solid #f59e0b;">
+                        <div style="font-size: 11px; color:#94a3b8; text-transform: uppercase;">Intervention Cost</div>
+                        <div style="font-size: 20px; font-weight: 800; color:#f59e0b;" id="sim-res-cost">₹1.47 Cr</div>
+                        <div style="font-size: 11px; color:#cbd5e1;">Net Savings: <b id="sim-res-net-savings" style="color:#10b981;">₹43.03 Cr</b></div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border-left: 3px solid #8b5cf6;">
+                        <div style="font-size: 11px; color:#94a3b8; text-transform: uppercase;">Bench Utilization</div>
+                        <div style="font-size: 20px; font-weight: 800; color:#a78bfa;" id="sim-res-utilization">84.8% (+1059 bps)</div>
+                        <div style="font-size: 11px; color:#cbd5e1;">From 74.2% baseline</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
+

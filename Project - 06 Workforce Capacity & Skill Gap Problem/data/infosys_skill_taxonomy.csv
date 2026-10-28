@@ -1,0 +1,26 @@
+skill_id,skill_name,cluster,scarcity,market_rate_usd,bridge_from,bridge_days,difficulty
+SK-AI-01,GenAI & LLM Fine-Tuning,Generative AI & ML,0.94,125,Python / Core ML,28,High
+SK-AI-02,Prompt Engineering & RAG Systems,Generative AI & ML,0.88,110,Python / NLP Basics,21,Medium
+SK-AI-03,MLOps & Model Governance,Generative AI & ML,0.91,120,DevOps & Docker,30,High
+SK-AI-04,Computer Vision & Deep Learning,Generative AI & ML,0.82,115,Data Science / Python,35,High
+SK-CL-01,Kubernetes & Microservices (EKS/GKE),Cloud Native & DevOps,0.89,115,Docker / Linux Admin,25,Medium
+SK-CL-02,AWS/Azure Cloud Solutions Architecture,Cloud Native & DevOps,0.86,130,Infrastructure Admin,35,High
+SK-CL-03,Golang High-Concurrency Systems,Cloud Native & DevOps,0.85,118,C++ / Java Backend,24,Medium
+SK-CL-04,Terraform & Multi-Cloud CI/CD,Cloud Native & DevOps,0.79,105,Jenkins / Scripting,18,Low
+SK-DT-01,Databricks & PySpark Lakehouse,Modern Data & Analytics,0.92,122,SQL / Python ETL,21,Medium
+SK-DT-02,Snowflake Cloud Data Warehousing,Modern Data & Analytics,0.84,112,Oracle / SQL Server,18,Low
+SK-DT-03,Apache Kafka Real-Time Streaming,Modern Data & Analytics,0.87,115,Java / Messaging Queues,22,Medium
+SK-DT-04,dbt & Modern Analytics Engineering,Modern Data & Analytics,0.76,98,SQL / BI Reporting,14,Low
+SK-FS-01,React / Next.js & TypeScript,Modern Full-Stack & UI,0.78,95,Angular / JavaScript,16,Low
+SK-FS-02,Java Spring Boot & Reactive Microservices,Modern Full-Stack & UI,0.74,95,Core Java / J2EE,20,Medium
+SK-FS-03,Flutter / React Native Cross-Platform,Modern Full-Stack & UI,0.75,92,Native Android / iOS,18,Low
+SK-EP-01,SAP S/4HANA Cloud Migration & FICO,Enterprise ERP & SaaS,0.93,135,SAP ECC 6.0,40,High
+SK-EP-02,Salesforce Financial Services Cloud (FSC),Enterprise ERP & SaaS,0.83,110,Salesforce Classic Admin,24,Medium
+SK-EP-03,ServiceNow ITOM & SecOps,Enterprise ERP & SaaS,0.81,105,ITIL / Helpdesk Support,21,Medium
+SK-CY-01,Zero Trust Architecture & IAM (Okta/Ping),Cyber Defense & SecOps,0.89,125,Active Directory / Network,28,High
+SK-CY-02,Cloud Security Posture Management (CSPM),Cyber Defense & SecOps,0.86,118,SysAdmin / Linux,22,Medium
+SK-LG-01,Legacy Mainframe (COBOL / JCL / CICS),Legacy Systems & Support,0.25,65,None,45,High
+SK-LG-02,Manual Regression Testing & QA,Legacy Systems & Support,0.2,45,None,14,Low
+SK-LG-03,Monolithic Java 7/8 Maintenance,Legacy Systems & Support,0.3,60,None,20,Medium
+SK-LG-04,On-Prem Oracle / PL-SQL DBA,Legacy Systems & Support,0.35,68,None,22,Medium
+SK-LG-05,L1/L2 Application Support & Ticketing,Legacy Systems & Support,0.18,40,None,18,Low
